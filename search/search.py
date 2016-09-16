@@ -91,9 +91,34 @@ def depthFirstSearch(problem):
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
     """
     "*** YOUR CODE HERE ***"
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
+    #print "Start:", problem.getStartState()
+    #print "Is the start a goal?", problem.isGoalState(problem.getStartState())
+    #print "Start's successors:", problem.getSuccessors(problem.getStartState())
+
+    start = problem.getStartState()
+    
+    discovered=[]
+    
+    actions=[]
+    
+    stack = util.Stack()
+
+    stack.push([start,Directions.STOP])
+    
+    print Directions.NORTH
+    
+    while not stack.isEmpty():
+        vertice, path = stack.pop()    
+        discovered.append(vertice)
+        if not problem.isGoalState(vertice):
+            for vizinho in problem.getSuccessors(vertice):
+                    if vizinho[0] not in discovered:
+                        stack.push([vizinho[0],path+(","+vizinho[1])])
+        else:
+            print  path.split(",")
+            break
+
+
 
 
 def breadthFirstSearch(problem):
@@ -104,7 +129,28 @@ def breadthFirstSearch(problem):
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    start = problem.getStartState()
+    
+    discovered=[]
+    
+    actions=[]
+    
+    queue = util.PriorityQueue()
+
+    queue.push([start,Directions.STOP],0)
+    
+    print Directions.NORTH
+    
+    while not queue.isEmpty():
+        vertice, path = queue.pop()    
+        discovered.append(vertice)
+        if not problem.isGoalState(vertice):
+            for vizinho in problem.getSuccessors(vertice):
+                    if vizinho[0] not in discovered:
+                        queue.push([vizinho[0],path+(","+vizinho[1])],vizinho[2])
+        else:
+            print  path.split(",")
+            break
 
 def nullHeuristic(state, problem=None):
     """
