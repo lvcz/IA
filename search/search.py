@@ -77,24 +77,7 @@ def tinyMazeSearch(problem):
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem):
-    """
-    Search the deepest nodes in the search tree first.
-
-    Your search algorithm needs to return a list of actions that reaches the
-    goal. Make sure to implement a graph search algorithm.
-
-    To get started, you might want to try some of these simple commands to
-    understand the search problem that is being passed in:
-
-    print "Start:", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors:", problem.getSuccessors(problem.getStartState())
-    """
-    "*** YOUR CODE HERE ***"
-    #print "Start:", problem.getStartState()
-    #print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    #print "Start's successors:", problem.getSuccessors(problem.getStartState())
-
+    
     start = problem.getStartState()
     
     discovered=[]
@@ -104,9 +87,7 @@ def depthFirstSearch(problem):
     stack = util.Stack()
 
     stack.push([start,Directions.STOP])
-    
-    print Directions.NORTH
-    
+	
     while not stack.isEmpty():
         vertice, path = stack.pop()    
         discovered.append(vertice)
@@ -115,10 +96,9 @@ def depthFirstSearch(problem):
                     if vizinho[0] not in discovered:
                         stack.push([vizinho[0],path+(","+vizinho[1])])
         else:
-            print  path.split(",")
+            #print  path.split(","), "tamanho" ,len(path.split(","))
             break
-
-
+    return path.split(",")
 
 
 def breadthFirstSearch(problem):
@@ -134,24 +114,21 @@ def uniformCostSearch(problem):
     discovered=[]
     
     actions=[]
-    
     queue = util.PriorityQueue()
-
     queue.push([start,Directions.STOP],0)
-    
-    print Directions.NORTH
-    
     while not queue.isEmpty():
-        vertice, path = queue.pop()    
+        vertice, path = queue.pop()
         discovered.append(vertice)
         if not problem.isGoalState(vertice):
             for vizinho in problem.getSuccessors(vertice):
                     if vizinho[0] not in discovered:
                         queue.push([vizinho[0],path+(","+vizinho[1])],vizinho[2])
         else:
-            print  path.split(",")
+            #print  path.split(",") , "tamanho" ,len(path.split(","))
             break
-
+    return path.split(",")
+    
+    
 def nullHeuristic(state, problem=None):
     """
     A heuristic function estimates the cost from the current state to the nearest
