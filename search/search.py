@@ -137,9 +137,24 @@ def nullHeuristic(state, problem=None):
     return 0
 
 def aStarSearch(problem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    start = problem.getStartState()
+    #pilha.update((vizinho[0],aux), problem.getCostOfActions(aux) + heuristic(vizinho[0],problem))
+    discovered=[]
+    
+    actions=[]
+    queue = util.PriorityQueue()
+    queue.push([start,Directions.STOP],0)
+    while not queue.isEmpty():
+        vertice, path = queue.pop()
+        discovered.append(vertice)
+        if not problem.isGoalState(vertice):
+            for vizinho in problem.getSuccessors(vertice):
+                    if vizinho[0] not in discovered:
+                        queue.update([vizinho[0],path+(","+vizinho[1])],problem.getCostOfActions(path.split(",")) + heuristic(vizinho[0],problem))
+        else:
+            #print  path.split(",") , "tamanho" ,len(path.split(","))
+            break
+    return path.split(",")
 
 
 # Abbreviations
