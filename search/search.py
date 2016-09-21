@@ -79,15 +79,10 @@ def tinyMazeSearch(problem):
 def depthFirstSearch(problem):
     
     start = problem.getStartState()
-    
     discovered=[]
-    
     actions=[]
-    
     stack = util.Stack()
-
-    stack.push([start,Directions.STOP])
-	
+    stack.push([start,Directions.STOP])	
     while not stack.isEmpty():
         vertice, path = stack.pop()    
         discovered.append(vertice)
@@ -96,10 +91,10 @@ def depthFirstSearch(problem):
                     if vizinho[0] not in discovered:
                         stack.push([vizinho[0],path+(","+vizinho[1])])
         else:
-            #print  path.split(","), "tamanho" ,len(path.split(","))
             break
     return path.split(",")
 
+	
 
 def breadthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
@@ -107,12 +102,9 @@ def breadthFirstSearch(problem):
 
 
 def uniformCostSearch(problem):
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
+    
     start = problem.getStartState()
-    
     discovered=[]
-    
     actions=[]
     queue = util.PriorityQueue()
     queue.push([start,Directions.STOP],0)
@@ -124,7 +116,6 @@ def uniformCostSearch(problem):
                     if vizinho[0] not in discovered:
                         queue.push([vizinho[0],path+(","+vizinho[1])],vizinho[2])
         else:
-            #print  path.split(",") , "tamanho" ,len(path.split(","))
             break
     return path.split(",")
     
@@ -138,9 +129,7 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     start = problem.getStartState()
-    #pilha.update((vizinho[0],aux), problem.getCostOfActions(aux) + heuristic(vizinho[0],problem))
     discovered=[]
-    
     actions=[]
     queue = util.PriorityQueue()
     queue.push([start,Directions.STOP],0)
@@ -150,7 +139,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         if not problem.isGoalState(vertice):
             for vizinho in problem.getSuccessors(vertice):
                     if vizinho[0] not in discovered:
-                        queue.update([vizinho[0],path+(","+vizinho[1])],problem.getCostOfActions(path.split(",")) + heuristic(vizinho[0],problem))
+                        queue.update([vizinho[0],path+(","+vizinho[1])], heuristic(vizinho[0],problem))
         else:
             #print  path.split(",") , "tamanho" ,len(path.split(","))
             break
